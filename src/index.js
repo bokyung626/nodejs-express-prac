@@ -23,6 +23,13 @@ app.get("/", (req, res) => {
     res.send("Node.js 정말 재미있어요!");// 아무 표현 요청이나 응답 다 보낼 수 있음.
 })
 
+// error middleware
+app.use((err,req,res,next)=>{
+    console.log(err);
+
+    res.status(err.status || 500).json({message: err.message || "서버에서 에러가 발생했습니다."}); // err.status가 있으면 출력하고 없으면 500으로
+})
+
 app.listen(8000, () => { // app.listen(작동포트, 서버 실행 후 실행 될 콜백 함수)
     console.log("server running... port 8000.");
 })

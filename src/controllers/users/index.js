@@ -28,14 +28,28 @@ class UserController {
     }
 
     // req,res를 매개인자로 갖는 콜백함수
-    getUsers(req, res){
-        res.status(200).json({ user: this.users });
+    getUsers(req, res, next){
+        try {
+            res.status(200).json({ user: this.users });
+        } catch (err) {
+            next(err);
+        }
     }
 
-    getUser(req, res){
-        const { id } = req.params; 
-        const user = users.find((user) => user.id === Number(id));
-        res.status(201).json({ user });
+    getUser(req, res, next){
+        try{
+            const { id } = req.params; 
+            const user = users.find((user) => user.id === Number(id));
+
+            if(!user){
+                throw { status: 404, message: "유저를 찾을 수 없습니다."};
+            }
+
+            res.status(200).json({ user });
+
+        }catch(err){
+            next(err);
+        }
     }
 
     createUser(req, res){
