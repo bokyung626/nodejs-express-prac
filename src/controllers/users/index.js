@@ -36,22 +36,6 @@ class UserController {
         }
     }
 
-    getUser(req, res, next){
-        try{
-            const { id } = req.params; 
-            const user = users.find((user) => user.id === Number(id));
-
-            if(!user){
-                throw { status: 404, message: "유저를 찾을 수 없습니다."};
-            }
-
-            res.status(200).json({ user });
-
-        }catch(err){
-            next(err);
-        }
-    }
-
     createUser(req, res){
         const { name, age } = req.body;
 
