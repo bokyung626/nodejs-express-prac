@@ -1,4 +1,4 @@
-import database from "../../database";
+import database from "../../../database";
 
 export class UserService{
 
@@ -11,7 +11,7 @@ export class UserService{
         });
 
         if(!user) return false;
-        return true;
+        return user;
     }
 
     async findUserById(id){
