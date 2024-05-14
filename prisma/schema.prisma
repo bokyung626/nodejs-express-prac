@@ -16,13 +16,23 @@ datasource db {
 model User{
   id String @id @default(uuid()) 
 
-  name String @db.VarChar(200)
   email String @db.VarChar(200) @unique
-  phoneNumber String @db.Char(11)
-  age Int
+  name String @db.VarChar(200)
+  //phoneNumber String @db.Char(11)
   password String
   
-  post Post[]
+  posts Post[]
+  comments Comment[]
+  postLikes PostLike[]
+}
+
+model PostLike {
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  postId String
+  post Post @relation(fields: [postId], references: [id])
+
+  @@id([userId, postId])
 }
 
 model Post{
@@ -30,7 +40,38 @@ model Post{
 
   title String @db.VarChar(200)
   content String @db.LongText
+  createdAt DateTime @default(now())
 
   userId String
   user User @relation(fields: [userId], references: [id])
+
+  commnets Comment[]
+  postLike PostLike[]
+  tags Tag[]
+}
+
+model Comment {
+  id String @id @default(uuid())
+
+  content String @db.VarChar(300)
+
+  //자기 자신과 관계를 맺을 경우 첫번째 인자로 이름을 넣어줘야 함.
+  parentCommentId String?
+  parentComment Comment? @relation("parentComment", fields: [parentCommentId], references: [id])
+  
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  postId String
+  post Post @relation(fields: [postId], references: [id])
+
+  childComments Comment[] @relation("parentComment")
+}
+
+model Tag{
+  id String @id @default(uuid())
+  
+  name String @db.VarChar(120)
+
+  postId String
+  post Post @relation(fields: [postId], references: [id])
 }
