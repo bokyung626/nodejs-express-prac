@@ -15,7 +15,7 @@ import { jwtAuth } from './middleware';
     app.use(helmet()); // 보안강화
     app.use(express.json()); //다양한 형태의 리퀘스트 바디 확인 가능 
     app.use(express.urlencoded({extended: true, limit:"700mb"})); //http URL 쿼리를 좀 더 쉽게 다룰 수 있게 해줌 //용량 제한 설정 json으로 700mb까지만 받음
-    app.use(jwtAuth);
+    //app.use(jwtAuth);
 
     // app.use('/users', UserController.router);
     Controllers.forEach((controller)=>{

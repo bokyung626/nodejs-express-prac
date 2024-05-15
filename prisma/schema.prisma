@@ -32,6 +32,7 @@ model PostLike {
   postId String
   post Post @relation(fields: [postId], references: [id])
 
+  //복합키로 설정 //2개 이상의 컬럼을 기본키로 설정할 때
   @@id([userId, postId])
 }
 
