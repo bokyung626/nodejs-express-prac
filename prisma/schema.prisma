@@ -53,7 +53,6 @@ model Post{
 
 model Comment {
   id String @id @default(uuid())
-
   content String @db.VarChar(300)
 
   //자기 자신과 관계를 맺을 경우 첫번째 인자로 이름을 넣어줘야 함.
