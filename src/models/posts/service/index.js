@@ -281,4 +281,39 @@ export class PostService {
       },
     });
   }
+
+  async deletePost(postId, user) {
+    const post = await database.post.findUnique({
+      where: {
+        id: postId,
+      },
+    });
+
+    if (!post) throw { status: 404, message: '게시글을 찾을 수 없습니다.' };
+
+    if (post.userId !== user.id) throw { status: 403, message: '본인의 글만 삭제할 수 있습니다.' };
+
+    await database.post.delete({
+      where: {
+        id: post.id,
+      },
+    });
+  }
+
+  async deleteComment(commentId, user) {
+    const comment = await database.comment.findUnique({
+      where: {
+        id: commentId,
+      },
+    });
+
+    if (!comment) throw { status: 404, message: '댓글을 찾을 수 없습니다.' };
+    if (comment.userId !== user.id) throw { status: 403, message: '본인의 댓글만 삭제할 수 있습니다.' };
+
+    await database.comment.delete({
+      where: {
+        id: post.id,
+      },
+    });
+  }
 }

@@ -28,9 +28,9 @@ model User{
 
 model PostLike {
   userId String
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   postId String
-  post Post @relation(fields: [postId], references: [id])
+  post Post @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
   //복합키로 설정 //2개 이상의 컬럼을 기본키로 설정할 때
   @@id([userId, postId])
@@ -44,7 +44,7 @@ model Post{
   createdAt DateTime @default(now())
 
   userId String
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
   commnets Comment[]
   postLike PostLike[]
@@ -60,9 +60,9 @@ model Comment {
   parentComment Comment? @relation("parentComment", fields: [parentCommentId], references: [id])
   
   userId String
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   postId String
-  post Post @relation(fields: [postId], references: [id])
+  post Post @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
   childComments Comment[] @relation("parentComment")
 }
@@ -73,5 +73,5 @@ model Tag{
   name String @db.VarChar(120)
 
   postId String
-  post Post @relation(fields: [postId], references: [id])
+  post Post @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 }

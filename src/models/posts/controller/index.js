@@ -28,6 +28,9 @@ class PostController {
 
     this.router.patch('/:postId', this.updatePost.bind(this));
     this.router.patch('/comments/:commentId', this.updateComment.bind(this));
+
+    this.router.delete('/:id', this.deletePost.bind(this));
+    this.router.delete('/comments/:commentId', this.deleteComment.bind(this));
   }
 
   // 포스트 상세 불러오기 API
@@ -169,6 +172,28 @@ class PostController {
 
       await this.postService.updatePost(postId, new UpdatePostDTO(body), req.user);
 
+      res.status(204).json({});
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async deletePost(req, res, next) {
+    try {
+      if (!req.user) throw { status: 401, message: '로그인을 진행해 주세요.' };
+      const { id } = req.params;
+      await this.postService.deletePost(id, req.user);
+      res.status(204).json({});
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async deleteComment(req, res, next) {
+    try {
+      if (!req.user) throw { status: 401, message: '로그인을 진행해 주세요.' };
+      const { commentId } = req.params;
+      await this.postService.deleteComment(commentId, req.user);
       res.status(204).json({});
     } catch (err) {
       next(err);
