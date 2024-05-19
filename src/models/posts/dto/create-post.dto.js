@@ -8,6 +8,6 @@ export class CreatePostDTO {
     this.title = props.title;
     this.content = props.content;
     this.userId = props.userId;
-    this.tags = props.tags;
+    this.tags = props.tags ?? [];
   }
 }

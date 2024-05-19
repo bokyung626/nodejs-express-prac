@@ -41,9 +41,9 @@ export class UserService {
   async createUser(props) {
     const newUser = await database.user.create({
       data: {
-        name: props.name,
-        phoneNumber: props.phoneNumber,
+        email: props.email,
         password: props.password,
+        name: props.name,
       },
     });
     // 새로운 유저의 id 반환
